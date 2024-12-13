@@ -1,0 +1,35 @@
+name: fortress_of_the_muslim
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  adhan: ^2.0.0+1
+  dartz: ^0.10.1
+  dio: ^5.7.0
+  equatable: ^2.0.7
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.6
+  flutter_local_notifications: ^18.0.1
+  flutter_qiblah: ^3.0.4
+  flutter_timezone: ^4.0.0
+  geolocator: ^13.0.2
+  get_it: ^8.0.2
+  go_router: ^14.6.1
+  intl: ^0.20.1
+  timezone: ^0.10.0
+  workmanager: ^0.5.2
+dev_dependencies:
+  flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/image/
+    - assets/json/adkar.json # استخدام / بدلاً من \
+  uses-material-design: true
