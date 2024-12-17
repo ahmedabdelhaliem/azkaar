@@ -1,4 +1,4 @@
-import 'package:fortress_of_the_muslim/pray/data/Model/azzan_model/azzan_model.dart';
+import 'package:fortress_of_the_muslim/pray/data/azzan_model/azzan_model.dart';
 
 abstract class PrayerTimesState {}
 

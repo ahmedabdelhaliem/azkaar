@@ -7,8 +7,8 @@ class PrayerTimesCubit extends Cubit<PrayerTimesState> {
   final AzaanRepo azaanRepo;
   PrayerTimesCubit(this.azaanRepo) : super(PrayerTimesInitial());
 
-  Future<void> fetchPrayerTimes(String city) async {
-    var result = await azaanRepo.fetchDailyPrayerTimes(city);
+  Future<void> fetchPrayerTimes() async {
+    var result = await azaanRepo.fetchDailyPrayerTimes();
     result.fold((failure) {
       emit(PrayerTimesError(failure.errorMessage));
     }, (time) {

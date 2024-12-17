@@ -5,7 +5,7 @@ import 'package:fortress_of_the_muslim/features/phreses/phreses_view.dart';
 import 'package:fortress_of_the_muslim/features/splash/widget/splash_view.dart';
 import 'package:fortress_of_the_muslim/features/tasbeh/TasbeehCounterScreen.dart';
 import 'package:fortress_of_the_muslim/features/tasbeh/tasbeh_view.dart';
-import 'package:fortress_of_the_muslim/pray/pray_time_view.dart';
+import 'package:fortress_of_the_muslim/pray/presentation/pray_time_view.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
@@ -38,15 +38,15 @@ abstract class AppRouter {
     GoRoute(
       path: kTasbeehCounterScreen,
       builder: (BuildContext context, GoRouterState state) {
-        return const Tasbeehcounterscreen();
+        return const TasbeehCounterScreen();
       },
     ),
     GoRoute(
       path: kPrayerTimesScreen,
       builder: (BuildContext context, GoRouterState state) {
         // الحصول على المدينة من extra
-        final city = state.extra as String? ?? 'cairo';
-        return PrayerTimesScreen(city: city);
+        // final city = state.extra as String? ?? 'cairo';
+        return const PrayerTimesScreen();
       },
     ),
   ]);

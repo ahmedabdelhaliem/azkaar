@@ -33,12 +33,12 @@ class WrapCustomCard extends StatelessWidget {
               // تمرير الفئة "أذكار التسبيح"
               GoRouter.of(context).push(
                 AppRouter.kPhresesView,
-                extra: 'أذكار تسبيح',
+                extra: 'تسابيح',
               );
             },
             child: const CustomCard(
               image: Images.taspih,
-              text: 'أذكار التسبيح',
+              text: 'تسابيح ',
             ),
           ),
           GestureDetector(

@@ -8,35 +8,70 @@ class PhresesViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: adkarList.length,
-      itemBuilder: (context, index) {
-        final adker = adkarList[index];
-        return Card(
-          margin: const EdgeInsets.all(8.0),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  adker.content,
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                if (adker.description.isNotEmpty)
-                  Text(
-                    adker.description,
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
-                  ),
-                const SizedBox(height: 8),
-                Text("عدد التكرار: ${adker.count}"),
-              ],
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFF74ABE2), Color(0xFFA1D5F4)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: ListView.builder(
+        itemCount: adkarList.length,
+        itemBuilder: (context, index) {
+          final adker = adkarList[index];
+          return Card(
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
             ),
-          ),
-        );
-      },
+            elevation: 5,
+            shadowColor: Colors.black.withOpacity(0.2),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    adker.content,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  if (adker.description.isNotEmpty)
+                    Text(
+                      adker.description,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "عدد التكرار: ${adker.count}",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.blueGrey,
+                        ),
+                      ),
+                      Icon(
+                        Icons.repeat,
+                        color: Colors.teal[400],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

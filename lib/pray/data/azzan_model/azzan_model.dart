@@ -1,19 +1,15 @@
 import 'package:equatable/equatable.dart';
 
-import 'item.dart';
-import 'today_weather.dart';
-
 class AzzanModel extends Equatable {
   final String? title;
   final String? query;
   final String? azzanModelFor;
   final int? method;
   final String? prayerMethodName;
-  final String? daylight;
-  final String? timezone;
+  final int? daylight;
+  final int? timezone;
   final String? mapImage;
   final String? sealevel;
-  final TodayWeather? todayWeather;
   final String? link;
   final String? qiblaDirection;
   final String? latitude;
@@ -39,7 +35,6 @@ class AzzanModel extends Equatable {
     this.timezone,
     this.mapImage,
     this.sealevel,
-    this.todayWeather,
     this.link,
     this.qiblaDirection,
     this.latitude,
@@ -60,16 +55,18 @@ class AzzanModel extends Equatable {
         title: json['title'] as String?,
         query: json['query'] as String?,
         azzanModelFor: json['for'] as String?,
-        method: json['method'] as int?,
+        method: json['method'] is int
+            ? json['method'] as int?
+            : int.tryParse(json['method']?.toString() ?? ''),
         prayerMethodName: json['prayer_method_name'] as String?,
-        daylight: json['daylight'] as String?,
-        timezone: json['timezone'] as String?,
+        daylight: json['daylight'] is int
+            ? json['daylight'] as int?
+            : int.tryParse(json['daylight']?.toString() ?? ''),
+        timezone: json['timezone'] is int
+            ? json['timezone'] as int?
+            : int.tryParse(json['timezone']?.toString() ?? ''),
         mapImage: json['map_image'] as String?,
         sealevel: json['sealevel'] as String?,
-        todayWeather: json['today_weather'] == null
-            ? null
-            : TodayWeather.fromJson(
-                json['today_weather'] as Map<String, dynamic>),
         link: json['link'] as String?,
         qiblaDirection: json['qibla_direction'] as String?,
         latitude: json['latitude'] as String?,
@@ -83,8 +80,12 @@ class AzzanModel extends Equatable {
         items: (json['items'] as List<dynamic>?)
             ?.map((e) => Item.fromJson(e as Map<String, dynamic>))
             .toList(),
-        statusValid: json['status_valid'] as int?,
-        statusCode: json['status_code'] as int?,
+        statusValid: json['status_valid'] is int
+            ? json['status_valid'] as int?
+            : int.tryParse(json['status_valid']?.toString() ?? ''),
+        statusCode: json['status_code'] is int
+            ? json['status_code'] as int?
+            : int.tryParse(json['status_code']?.toString() ?? ''),
         statusDescription: json['status_description'] as String?,
       );
 
@@ -98,7 +99,6 @@ class AzzanModel extends Equatable {
         'timezone': timezone,
         'map_image': mapImage,
         'sealevel': sealevel,
-        'today_weather': todayWeather?.toJson(),
         'link': link,
         'qibla_direction': qiblaDirection,
         'latitude': latitude,
@@ -127,7 +127,6 @@ class AzzanModel extends Equatable {
       timezone,
       mapImage,
       sealevel,
-      todayWeather,
       link,
       qiblaDirection,
       latitude,
@@ -142,6 +141,59 @@ class AzzanModel extends Equatable {
       statusValid,
       statusCode,
       statusDescription,
+    ];
+  }
+}
+
+class Item extends Equatable {
+  final String? dateFor;
+  final String? fajr;
+  final String? shurooq;
+  final String? dhuhr;
+  final String? asr;
+  final String? maghrib;
+  final String? isha;
+
+  const Item({
+    this.dateFor,
+    this.fajr,
+    this.shurooq,
+    this.dhuhr,
+    this.asr,
+    this.maghrib,
+    this.isha,
+  });
+
+  factory Item.fromJson(Map<String, dynamic> json) => Item(
+        dateFor: json['date_for'] as String?,
+        fajr: json['fajr'] as String?,
+        shurooq: json['shurooq'] as String?,
+        dhuhr: json['dhuhr'] as String?,
+        asr: json['asr'] as String?,
+        maghrib: json['maghrib'] as String?,
+        isha: json['isha'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'date_for': dateFor,
+        'fajr': fajr,
+        'shurooq': shurooq,
+        'dhuhr': dhuhr,
+        'asr': asr,
+        'maghrib': maghrib,
+        'isha': isha,
+      };
+
+  @override
+  List<Object?> get props {
+    return [
+      dateFor,
+      fajr,
+      shurooq,
+      dhuhr,
+      asr,
+      maghrib,
+      isha,
     ];
   }
 }

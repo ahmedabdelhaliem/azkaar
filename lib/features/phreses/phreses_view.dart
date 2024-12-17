@@ -5,8 +5,9 @@ import 'package:fortress_of_the_muslim/features/home/home_view.dart';
 import 'package:fortress_of_the_muslim/features/home/presentation/view/maneger/cubit.dart';
 import 'package:fortress_of_the_muslim/features/home/presentation/view/maneger/state.dart';
 import 'package:fortress_of_the_muslim/features/phreses/widget/phreses_view_body.dart';
+import 'package:fortress_of_the_muslim/features/tasbeh/TasbeehCounterScreen.dart';
 import 'package:fortress_of_the_muslim/features/tasbeh/tasbeh_view.dart';
-import 'package:fortress_of_the_muslim/pray/pray_time_view.dart';
+import 'package:fortress_of_the_muslim/pray/presentation/pray_time_view.dart';
 
 class PhresesView extends StatefulWidget {
   final String category;
@@ -72,7 +73,7 @@ class _PhresesViewState extends State<PhresesView> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const TasbeehCounterScreenBody(),
+                builder: (context) => const TasbeehCounterScreen(),
               ),
             );
           } else if (index == 2) {
@@ -80,7 +81,7 @@ class _PhresesViewState extends State<PhresesView> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const PrayerTimesScreen(city: 'Cairo'),
+                builder: (context) => const PrayerTimesScreen(),
               ),
             );
           }

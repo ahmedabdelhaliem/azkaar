@@ -1,23 +1,20 @@
 // import 'package:fortress_of_the_muslim/core/notifications/local_notification_service.dart';
 // import 'package:workmanager/workmanager.dart';
-// // steps
-// //1.init work manager
-// //2.excute our task.
-// //3.register our task in work manager
 
 // class WorkManagerService {
 //   void registerMyTask() async {
-//     //register my task
+//     // تسجل المهمة لإرسال الإشعارات بشكل دوري كل دقيقة
 //     await Workmanager().registerPeriodicTask(
 //       'id1',
-//       'show simple notification',
-//       frequency: const Duration(minutes: 15),
+//       'send prayer notifications',
+//       frequency: const Duration(minutes: 1), // إرسال المهمة كل دقيقة
+//       initialDelay: const Duration(seconds: 5), // تأخير البداية قليلاً
 //     );
 //   }
 
-//   //init work manager service
+//   // تهيئة خدمة Workmanager
 //   Future<void> init() async {
-//     await Workmanager().initialize(actionTask, isInDebugMode: true);
+//     await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
 //     registerMyTask();
 //   }
 
@@ -27,14 +24,10 @@
 // }
 
 // @pragma('vm-entry-point')
-// void actionTask() {
-//   //show notification
-//   Workmanager().executeTask((taskName, inputData) {
-//     LocalNotificationService.(
-//         title: '44444444444', body: '444444444444');
+// void callbackDispatcher() {
+//   Workmanager().executeTask((taskName, inputData) async {
+//     // استدعاء دالة عرض الإشعار (لإرسال الإشعار في الوقت المناسب)
+//     // await LocalNotificationService.scheduleNotification();
 //     return Future.value(true);
 //   });
 // }
-
-// //1.schedule notification at 9 pm.
-// //2.execute for this notification.
