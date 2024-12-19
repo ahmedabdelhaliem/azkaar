@@ -4,7 +4,7 @@ import 'package:fortress_of_the_muslim/core/notifications/local_notification_ser
 import 'package:fortress_of_the_muslim/pray/data/domain/cubit.dart';
 import 'package:fortress_of_the_muslim/pray/data/domain/state_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'pray_time_card.dart';
+import 'presentation/pray_time_card.dart';
 
 class PrayerTimesScreen extends StatefulWidget {
   const PrayerTimesScreen({super.key});

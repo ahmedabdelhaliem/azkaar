@@ -5,7 +5,7 @@ import 'package:fortress_of_the_muslim/features/home/presentation/view/widget/az
 import 'package:fortress_of_the_muslim/features/home/presentation/view/widget/home_view_body.dart';
 import 'package:fortress_of_the_muslim/features/tasbeh/TasbeehCounterScreen.dart';
 import 'package:fortress_of_the_muslim/features/tasbeh/tasbeh_view.dart';
-import 'package:fortress_of_the_muslim/pray/presentation/pray_time_view.dart';
+import 'package:fortress_of_the_muslim/pray/pray_time_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

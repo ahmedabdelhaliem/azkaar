@@ -16,18 +16,11 @@ void main() async {
   tz.setLocalLocation(tz.getLocation('Africa/Cairo'));
 
   // تهيئة الإشعارات
-  // await LocalNotificationService.init();
   await Future.wait([
     LocalNotificationService.init(),
-    // WorkManagerService().init(),
+    WorkManagerService().init(),
   ]);
-
   setup();
-
-  // إعداد GetIt
-
-  // تحديد أوقات الصلاة والإشعارات
-  // await LocalNotificationService.scheduleAllPrayerNotifications('Cairo');
 
   runApp(const FortressOftheMuslim());
 }
