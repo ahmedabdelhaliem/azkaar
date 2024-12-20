@@ -13,20 +13,22 @@ class HomeViewBody extends StatelessWidget {
 
     return Column(
       children: [
+        // الحاوية الخاصة بالصورة مع خلفية شفافة
         Container(
-          color: Colors.white.withOpacity(.8),
+          color: Colors.teal.withOpacity(0.8), // خلفية شفافة بلون التوركوازي
           height: screenHeight * 0.25, // يجعل الحاوية تحتل ربع الشاشة
           width: screenWidth,
-
           alignment: Alignment.center, // لتوسيط الصورة داخل الحاوية
           child: Image.asset(
-            Images.splashRemove,
-            height: screenHeight * 0.40, // حجم الصورة نسبة إلى الشاشة
-            width: screenWidth * 0.40,
+            Images.mosque,
+            height: screenHeight * 0.30, // حجم الصورة نسبة إلى الشاشة
+            width: screenWidth * 0.30,
           ),
         ),
-        const WrapCustomCard(),
-        // Expanded(ش
+        const WrapCustomCard(), // الكارد المخصص لعرض المحتوى
+
+        // يتم تعليق هذا القسم لأنه كان جزءًا غير مكتمل، في حال الحاجة إليه يمكنك إلغاء تعليق السطور أدناه
+        // Expanded(
         //   child: Container(
         //     color: Colors.white, // لون الخلفية لباقي الشاشة
         //     child: const Center(

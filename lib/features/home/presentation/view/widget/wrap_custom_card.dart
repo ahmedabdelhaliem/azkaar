@@ -89,7 +89,7 @@ class WrapCustomCard extends StatelessWidget {
               );
             },
             child: const CustomCard(
-              image: Images.moon, // يمكنك تغيير الصورة حسب الرغبة
+              image: Images.sleep, // يمكنك تغيير الصورة حسب الرغبة
               text: 'أذكار المساء',
             ),
           ),

@@ -16,10 +16,8 @@ void main() async {
   tz.setLocalLocation(tz.getLocation('Africa/Cairo'));
 
   // تهيئة الإشعارات
-  await Future.wait([
-    LocalNotificationService.init(),
-    WorkManagerService().init(),
-  ]);
+  await LocalNotificationService.init();
+  await WorkManagerService().init();
   setup();
 
   runApp(const FortressOftheMuslim());

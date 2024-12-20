@@ -8,4 +8,5 @@ class Images {
   static const papyrus = 'assets/image/scroll.png';
   static const sunny = 'assets/image/sun.png';
   static const mosque = 'assets/image/mosque.png';
+  static const sleep = 'assets/image/sleep.png';
 }

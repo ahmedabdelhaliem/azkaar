@@ -5,6 +5,7 @@ import 'package:fortress_of_the_muslim/pray/data/domain/cubit.dart';
 import 'package:fortress_of_the_muslim/pray/data/domain/state_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'presentation/pray_time_card.dart';
+import 'package:fortress_of_the_muslim/core/widget/bottom_nav_bar.dart'; // إضافة هذه الاستيراد
 
 class PrayerTimesScreen extends StatefulWidget {
   const PrayerTimesScreen({super.key});
@@ -14,7 +15,7 @@ class PrayerTimesScreen extends StatefulWidget {
 }
 
 class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
-  // خريطة لحفظ حالة الإشعارات
+  int currentIndex = 2; // لحفظ الحالة الحالية للتنقل بين الصفحات
   final Map<String, bool> _notificationSettings = {
     'الفجر': false,
     'الظهر': false,
@@ -87,6 +88,13 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
     _saveNotificationSettings(prayer, isEnabled); // حفظ الحالة
   }
 
+  // دالة للتنقل بين الصفحات بناءً على الاختيار
+  void _navigateToPage(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,96 +107,99 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
         backgroundColor: Colors.teal,
       ),
       body: BlocBuilder<PrayerTimesCubit, PrayerTimesState>(
-        builder: (context, state) {
-          if (state is PrayerTimesLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is PrayerTimesLoaded) {
-            final times = state.prayerTimes.items?.first;
+          builder: (context, state) {
+        if (state is PrayerTimesLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is PrayerTimesLoaded) {
+          final times = state.prayerTimes.items?.first;
 
-            return ListView(
-              padding: const EdgeInsets.all(16),
+          return ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              PrayerTimeCard(
+                title: 'الفجر',
+                time: times?.fajr ?? 'غير متوفر',
+                icon: Icons.wb_sunny,
+                color: Colors.blue,
+                isNotificationEnabled: _notificationSettings['الفجر']!,
+                onNotificationToggle: (isEnabled) =>
+                    _toggleNotification('الفجر', isEnabled, times?.fajr),
+              ),
+              PrayerTimeCard(
+                title: 'الظهر',
+                time: times?.dhuhr ?? 'غير متوفر',
+                icon: Icons.sunny,
+                color: Colors.orange,
+                isNotificationEnabled: _notificationSettings['الظهر']!,
+                onNotificationToggle: (isEnabled) =>
+                    _toggleNotification('الظهر', isEnabled, times?.dhuhr),
+              ),
+              PrayerTimeCard(
+                title: 'العصر',
+                time: times?.asr ?? 'غير متوفر',
+                icon: Icons.cloud,
+                color: Colors.brown,
+                isNotificationEnabled: _notificationSettings['العصر']!,
+                onNotificationToggle: (isEnabled) =>
+                    _toggleNotification('العصر', isEnabled, times?.asr),
+              ),
+              PrayerTimeCard(
+                title: 'المغرب',
+                time: times?.maghrib ?? 'غير متوفر',
+                icon: Icons.nightlight_round,
+                color: Colors.red,
+                isNotificationEnabled: _notificationSettings['المغرب']!,
+                onNotificationToggle: (isEnabled) =>
+                    _toggleNotification('المغرب', isEnabled, times?.maghrib),
+              ),
+              PrayerTimeCard(
+                title: 'العشاء',
+                time: times?.isha ?? 'غير متوفر',
+                icon: Icons.nightlife,
+                color: Colors.purple,
+                isNotificationEnabled: _notificationSettings['العشاء']!,
+                onNotificationToggle: (isEnabled) =>
+                    _toggleNotification('العشاء', isEnabled, times?.isha),
+              ),
+            ],
+          );
+        } else if (state is PrayerTimesError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                PrayerTimeCard(
-                  title: 'الفجر',
-                  time: times?.fajr ?? 'غير متوفر',
-                  icon: Icons.wb_sunny,
-                  color: Colors.blue,
-                  isNotificationEnabled: _notificationSettings['الفجر']!,
-                  onNotificationToggle: (isEnabled) =>
-                      _toggleNotification('الفجر', isEnabled, times?.fajr),
+                const Icon(Icons.error_outline, color: Colors.red, size: 50),
+                const SizedBox(height: 10),
+                Text(
+                  'خطأ: ${state.error}',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 18, color: Colors.red),
                 ),
-                PrayerTimeCard(
-                  title: 'الظهر',
-                  time: times?.dhuhr ?? 'غير متوفر',
-                  icon: Icons.sunny,
-                  color: Colors.orange,
-                  isNotificationEnabled: _notificationSettings['الظهر']!,
-                  onNotificationToggle: (isEnabled) =>
-                      _toggleNotification('الظهر', isEnabled, times?.dhuhr),
-                ),
-                PrayerTimeCard(
-                  title: 'العصر',
-                  time: times?.asr ?? 'غير متوفر',
-                  icon: Icons.cloud,
-                  color: Colors.brown,
-                  isNotificationEnabled: _notificationSettings['العصر']!,
-                  onNotificationToggle: (isEnabled) =>
-                      _toggleNotification('العصر', isEnabled, times?.asr),
-                ),
-                PrayerTimeCard(
-                  title: 'المغرب',
-                  time: times?.maghrib ?? 'غير متوفر',
-                  icon: Icons.nightlight_round,
-                  color: Colors.red,
-                  isNotificationEnabled: _notificationSettings['المغرب']!,
-                  onNotificationToggle: (isEnabled) =>
-                      _toggleNotification('المغرب', isEnabled, times?.maghrib),
-                ),
-                PrayerTimeCard(
-                  title: 'العشاء',
-                  time: times?.isha ?? 'غير متوفر',
-                  icon: Icons.nightlife,
-                  color: Colors.purple,
-                  isNotificationEnabled: _notificationSettings['العشاء']!,
-                  onNotificationToggle: (isEnabled) =>
-                      _toggleNotification('العشاء', isEnabled, times?.isha),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    context.read<PrayerTimesCubit>().fetchPrayerTimes();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.teal,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 10),
+                  ),
+                  child: const Text(
+                    'إعادة المحاولة',
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
               ],
-            );
-          } else if (state is PrayerTimesError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error_outline, color: Colors.red, size: 50),
-                  const SizedBox(height: 10),
-                  Text(
-                    'خطأ: ${state.error}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 18, color: Colors.red),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<PrayerTimesCubit>().fetchPrayerTimes();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 10),
-                    ),
-                    child: const Text(
-                      'إعادة المحاولة',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return const SizedBox.shrink();
-          }
-        },
+            ),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      }),
+      bottomNavigationBar: CustomNavigationBar(
+        currentIndex: currentIndex,
+        onItemSelected: _navigateToPage, // تخصيص الدالة للتنقل بين الصفحات
       ),
     );
   }

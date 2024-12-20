@@ -3,64 +3,69 @@ import 'package:fortress_of_the_muslim/core/utils/app_router.dart';
 import 'package:fortress_of_the_muslim/core/utils/assets.dart';
 import 'package:go_router/go_router.dart';
 
-class CustomBottomNavigationBar extends StatelessWidget {
-  final int currentIndex;
-  final ValueChanged<int> onItemSelected;
-
-  const CustomBottomNavigationBar({
+class CustomNavigationBar extends StatelessWidget {
+  CustomNavigationBar({
     super.key,
     required this.currentIndex,
     required this.onItemSelected,
   });
+  final int currentIndex;
+  final ValueChanged<int> onItemSelected;
+
+  // قائمة بالبيانات المتعلقة بكل وجهة
+  final List<Map<String, String>> _destinations = [
+    {'image': Images.quran, 'label': 'اذكار'},
+    {'image': Images.taspih, 'label': 'تسبيح'},
+    {'image': Images.mosque, 'label': 'مسجد'},
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      backgroundColor: Colors.white.withOpacity(.8),
-      selectedItemColor: Colors.amber[900], // اللون المحدد
-      unselectedItemColor: Colors.grey, // اللون غير المحدد
-      currentIndex: currentIndex, // تعيين العنصر المحدد
-      onTap: (index) {
-        onItemSelected(index); // تغيير العنصر المحدد
+    return NavigationBar(
+      backgroundColor: Colors.teal,
+      selectedIndex: currentIndex,
+      onDestinationSelected: (index) {
+        onItemSelected(index);
         _navigateToPage(context, index);
       },
-      items: [
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            Images.quran,
-            height: 30,
-            width: 30,
-          ),
-          label: 'اذكار',
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            Images.taspih,
-            height: 30,
-            width: 30,
-          ),
-          label: 'تسبيح',
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            Images.mosque,
-            height: 30,
-            width: 30,
-          ),
-          label: 'مسجد',
-        ),
-      ],
+      destinations: List.generate(
+        _destinations.length,
+        (index) {
+          final destination = _destinations[index];
+          return NavigationDestination(
+            icon: _getIconForIndex(index, destination['image']!),
+            label: destination['label']!,
+            tooltip: destination['label'],
+          );
+        },
+      ),
     );
   }
 
+  // دالة لاختيار الأيقونة بناءً على الصفحة المحددة
+  Widget _getIconForIndex(int index, String imagePath) {
+    return Image.asset(
+      imagePath,
+      height: 30,
+      width: 30,
+      color: currentIndex == index ? null : Colors.grey,
+    );
+  }
+
+  // دالة للتنقل بين الصفحات بناءً على الاختيار
   void _navigateToPage(BuildContext context, int index) {
-    if (index == 0) {
-      GoRouter.of(context).push(AppRouter.kHomeView); // الصفحة الرئيسية
-    } else if (index == 1) {
-      GoRouter.of(context)
-          .push(AppRouter.kTasbeehCounterScreen); // صفحة التسبيح
-    } else if (index == 2) {
-      GoRouter.of(context).push(AppRouter.kPrayerTimesScreen); // صفحة الصلاة
+    switch (index) {
+      case 0:
+        GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
+        break;
+      case 1:
+        GoRouter.of(context).pushReplacement(AppRouter.kTasbeehCounterScreen);
+        break;
+      case 2:
+        GoRouter.of(context).pushReplacement(AppRouter.kPrayerTimesScreen);
+        break;
+      default:
+        break;
     }
   }
 }
